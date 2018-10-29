@@ -39,16 +39,17 @@ def feed_me_a_fruit
     retry
   rescue
     puts "I don't like that fruit!"
-  ensure
     puts "I'm not your friend"
     exit(0)
-
   end
 end
 
 # PHASE 4
 class BestFriend
   def initialize(name, yrs_known, fav_pastime)
+    raise "You don't know me!!!!!!!!!!!!!!!!!" if yrs_known < 5
+    raise "That's not a real name" if name.length < 1
+    raise "That's not a real hobby" if fav_pastime.length < 1
     @name = name
     @yrs_known = yrs_known
     @fav_pastime = fav_pastime
