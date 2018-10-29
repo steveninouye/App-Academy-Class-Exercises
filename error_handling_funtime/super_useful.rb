@@ -10,7 +10,7 @@ NUMS = {
 def convert_to_int(str)
   begin
     Integer(str)
-  rescue
+  rescue ArgumentError => e
     NUMS[str]
   end
 end
@@ -21,6 +21,8 @@ FRUITS = ["apple", "banana", "orange"]
 def reaction(maybe_fruit)
   if FRUITS.include? maybe_fruit
     puts "OMG, thanks so much for the #{maybe_fruit}!"
+  elsif maybe_fruit == "coffee"
+    raise "Thanks for the coffee!"
   else
     raise StandardError
   end
@@ -28,10 +30,20 @@ end
 
 def feed_me_a_fruit
   puts "Hello, I am a friendly monster. :)"
+  begin
+    puts "Feed me a fruit! (Enter the name of a fruit:)"
+    maybe_fruit = gets.chomp
+    reaction(maybe_fruit)
+  rescue RuntimeError => e
+    puts e
+    retry
+  rescue
+    puts "I don't like that fruit!"
+  ensure
+    puts "I'm not your friend"
+    exit(0)
 
-  puts "Feed me a fruit! (Enter the name of a fruit:)"
-  maybe_fruit = gets.chomp
-  reaction(maybe_fruit)
+  end
 end
 
 # PHASE 4
