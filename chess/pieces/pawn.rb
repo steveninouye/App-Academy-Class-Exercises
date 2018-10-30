@@ -1,12 +1,12 @@
 require_relative "../piece"
 
-def Pawn < Piece
+class Pawn < Piece
 
     def initialize(color, board, pos)
       super(color, board, pos)
       @symbol = "♟"
     end
-    
+
     def move_dirs
 
     end

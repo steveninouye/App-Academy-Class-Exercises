@@ -19,16 +19,11 @@ class Display
       print "#{row_idx} "
       row.each_with_index do |col, col_idx|
         pos = [row_idx, col_idx]
-        # if pos == @cursor.cursor_pos
-        #   sym = "x"
-        if col.is_a?(NullPiece)
-          sym = "-"
-        elsif col.is_a?(Piece)
-          sym = "P"
-        end
-
-        sym = @cursor.cursor_pos == pos ? sym.colorize(:color => :red) : sym.colorize(:color => :blue)
-        print sym
+        piece = @board[pos]
+        sym = piece.symbol
+        color = piece.color
+        sym = @cursor.cursor_pos == pos ? sym.colorize(:color => :red) : sym.colorize(:color => color)
+        print " #{sym}"
       end
       print "\n"
     end
