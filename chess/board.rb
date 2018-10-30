@@ -30,9 +30,25 @@ class Board
     3 => King
   }
 
-  def initialize
-    @board = create_board
+  def initialize(board=create_board)
+    @board = board
   end
+
+  def in_check?(color)
+    find_king(color)
+    enemy_color = color == :white ? :black : :white
+  end
+
+  def find_king(color)
+    @board.each.with_index do |r, ridx|
+      row.each_with_index do |c,cidx|
+        king_pos = [ridx,cidx] if c.is_a?(King) && c.color == color}
+      end
+    end
+    king_pos
+  end
+
+
 
   def create_board
 
@@ -64,6 +80,10 @@ class Board
 
   def valid_pos?(pos)
     self[pos]
+  end
+
+  def dup
+    Board.new(@board.map {|row| row.map { |pc| pc.class != NullPiece ? pc.dup : pc }})
   end
 
   # Syntactic Sugar for grid assignment for board
