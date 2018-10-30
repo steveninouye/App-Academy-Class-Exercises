@@ -1,4 +1,6 @@
-require_relative "piece.rb"
+require_relative "piece"
+require_relative "display"
+require_relative "pieces/null_piece"
 
 class Board
 
@@ -7,26 +9,36 @@ class Board
   end
 
   def create_board
-    Array.new(8) {Array.new(8){ [Piece.new]}}
+    top = Array.new(2) {Array.new(8) {[Piece.new]}}
+    mid = Array.new(4) {Array.new(8){ [NullPiece.instance] }}
+    bottom = Array.new(2) {Array.new(8) {[Piece.new]}}
+    top + mid + bottom
   end
 
   def move(start_pos, end_pos)
-    start_row, start_col = start_pos
-    end_row, end_col = end_pos
 
-    piece = @board[start_row][start_col]
-    @board[end_row][end_col] = piece
 
-    @board[start_row][start_col] = nil
+      piece = self[start_pos]
+      self[end_pos] = piece
+    rescue
+
+      retry
+    end
+      self[start_pos] = NullPiece.instance
+
 
   end
 
   # Syntactic Sugar for grid assignment for board
-  def [](row, col)
+  def [](pos)
+    row, col = pos
+    raise "Invalid coordinate" unless (0..7).include?(row) && (0..7).include?(col)
     @board[row][col]
   end
 
-  def []=(row, col, mark)
+  def []=(pos, mark)
+    row, col = pos
+    raise "Invalid coordinate" unless (0..7).include?(row) && (0..7).include?(col)
     @board[row][col] = mark
   end
 
